@@ -11,6 +11,7 @@ namespace Envoy {
 namespace Event {
 
 /**
+ * FileEventImpl 封装了文件读写事件
  * Implementation of FileEvent for libevent that uses persistent events and
  * assumes the user will read/write until EAGAIN is returned from the file.
  */

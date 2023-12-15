@@ -131,6 +131,8 @@ private:
 
   TimerPtr createTimerInternal(TimerCb cb);
   void updateApproximateMonotonicTimeInternal();
+  // runPostCallbacks 是一个 while 循环，每次从 post_callbacks_ 代表的队列中取出一个 callback 去执行。
+  // 直到 post_callbacks_ 未空
   void runPostCallbacks();
   void runThreadLocalDelete();
 

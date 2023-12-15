@@ -253,6 +253,7 @@ SignalEventPtr DispatcherImpl::listenForSignal(signal_t signal_num, SignalCb cb)
   return SignalEventPtr{new SignalEventImpl(*this, signal_num, cb)};
 }
 
+// post 函数提交一个函数对象到事件循环中，等待 Dispatcher 来执行，是在 Dispatcher 所在线程中执行。
 void DispatcherImpl::post(PostCb callback) {
   bool do_post;
   {
@@ -368,6 +369,7 @@ void DispatcherImpl::runPostCallbacks() {
     // executing a long list of callbacks.
     touchWatchdog();
     // Run the callback.
+    // 这里调用了两次，所以实际执行了 callback 函数
     callbacks.front()();
     // Pop the front so that the destructor of the callback that just executed runs before the next
     // callback executes.
