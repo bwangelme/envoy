@@ -30,6 +30,8 @@ public:
   bool isShutdown() const override { return shutdown_; }
 
 private:
+  // SlotImpl 是对 threadlocal 的抽象。看起来每个线程只会有一个 SlotImpl 对象
+  // 难道说所有内存间共享的数据，都放在一个 ThreadLocalObject 中，发生变化，都会全量复制一份?
   // On destruction returns the slot index to the deferred delete queue (detaches it). This allows
   // a slot to be destructed on the main thread while controlling the lifetime of the underlying
   // slot as callbacks drain from workers.
@@ -66,6 +68,8 @@ private:
     std::shared_ptr<bool> still_alive_guard_;
   };
 
+  // ThreadLocalData 每个线程存储的 tls
+  // data_ 数组存储了指向真正的数据的指针
   struct ThreadLocalData {
     Event::Dispatcher* dispatcher_{};
     std::vector<ThreadLocalObjectSharedPtr> data_;

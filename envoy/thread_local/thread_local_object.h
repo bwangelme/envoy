@@ -10,6 +10,7 @@ namespace Envoy {
 namespace ThreadLocal {
 
 /**
+ * ThreadLocalObject 表示线程本地变量，所有线程本地数据都要继承 ThreadLocalObject
  * All objects that are stored via the ThreadLocal interface must derive from this type.
  */
 class ThreadLocalObject {
